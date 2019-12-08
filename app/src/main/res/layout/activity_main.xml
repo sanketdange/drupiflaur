@@ -9,44 +9,49 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/authorText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:inputType="textPersonName"
-            android:text="what is the author's name?"
-            android:textSize="24sp"
-            android:typeface="serif" />
+            android:singleLine="true"
+            android:hint="enter author name here." />
 
         <EditText
             android:id="@+id/poemText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:hint="enter poem content here."
+            android:inputType="textMultiLine"
+            />
+
+        <com.raodevs.touchdraw.TouchDrawView
+            android:id="@+id/canvas"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:background="#00FFFFFF" />
+
+        <Button
+            android:id="@+id/clearButton"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="what would you like to write?"
-            android:textSize="24sp"
-            android:typeface="serif" />
+            android:text="clear"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/generateButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#1B1B1B"
-            android:hapticFeedbackEnabled="true"
-            android:text="generate poem."
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:typeface="serif" />
-
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="generate"
+            android:textAllCaps="false" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

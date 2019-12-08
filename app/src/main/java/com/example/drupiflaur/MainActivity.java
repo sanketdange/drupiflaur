@@ -1,17 +1,34 @@
 package com.example.drupiflaur;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.raodevs.touchdraw.TouchDrawView;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,13 +36,52 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        View btn = findViewById(R.id.generateButton);
-        btn.setOnClickListener(new View.OnClickListener() {
+
+        final TouchDrawView touchDrawView = findViewById(R.id.canvas);
+        touchDrawView.setPaintColor(Color.BLACK);
+
+
+        Button clear = findViewById(R.id.clearButton);
+        clear.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                setContentView(R.layout.generated_main);
+            public void onClick(View unused) {
+                touchDrawView.clear();
             }
         });
+
+        Button generate = findViewById(R.id.generateButton);
+        generate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText author = findViewById(R.id.authorText);
+                EditText poem = findViewById(R.id.poemText);
+
+                Intent intent = new Intent(MainActivity.this.getApplicationContext(), GeneratedActivity.class);
+                intent.putExtra("authorText", author.getText().toString());
+                intent.putExtra("poemText", poem.getText().toString());
+                try {
+                    if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        String path = Environment.getExternalStorageDirectory().toString();
+                        OutputStream fOut = null;
+                        File file = new File(path, "image.PNG");
+                        fOut = new FileOutputStream(file);
+                        Bitmap bitmap = touchDrawView.getFile();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+                        fOut.flush();
+                        fOut.close();
+                        intent.putExtra("imagePath", file.getAbsolutePath());
+                    } else {
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                MainActivity.this.startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override

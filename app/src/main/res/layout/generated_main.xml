@@ -23,28 +23,39 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="150dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="150dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/poemText"
-                android:layout_width="wrap_content"
-                android:layout_height="500sp"
-                android:layout_weight="1" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="serif"
+                android:gravity="bottom|left"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/authorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:fontFamily="serif"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="200sp"
-            android:layout_marginTop="400sp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="150dp"
+            android:layout_marginTop="180dp"
             android:layout_weight="1"
             tools:srcCompat="@tools:sample/avatars" />
 
